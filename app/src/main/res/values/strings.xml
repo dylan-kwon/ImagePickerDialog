@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ImagePickerDialog</string>
+
+    <string name="common_ok">확인</string>
+
+    <string name="image_select">사진 선택</string>
+
+    <string name="max">최대</string>
+    <string name="image_select_over_count">개의 이미지까지 선택 가능합니다!</string>
+
+    <string name="start_guide">우측 하단 버튼을 클릭해서 이미지 픽커를 띄울 수 있습니다.</string>
+</resources>

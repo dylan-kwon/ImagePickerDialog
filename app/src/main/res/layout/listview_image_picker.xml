@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fl_listview_image_picker_item"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_margin="1.25dp"
+    android:background="@color/color_efeff4"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/iv_listview_image_picker_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_d8d8d8"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/ic_image_white_48dp" />
+
+    <TextView
+        android:id="@+id/tv_listview_image_picker_index"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_gravity="top|end"
+        android:layout_marginEnd="6.5dp"
+        android:layout_marginRight="6.5dp"
+        android:layout_marginTop="6.5dp"
+        android:background="@drawable/shape_round_accent_22dp"
+        android:gravity="center"
+        android:textColor="@color/color_ffffff"
+        android:visibility="gone" />
+</FrameLayout>
