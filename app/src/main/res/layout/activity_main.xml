@@ -18,21 +18,13 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_activity_main_selected_images"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <TextView
-            android:id="@+id/tv_activity_main_selected_images_path"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="@string/start_guide"
-            android:textColor="@color/color_4a4a4a"
-            android:textSize="16sp" />
-
-    </android.support.v4.widget.NestedScrollView>
+        android:layout_height="150dp"
+        android:clipToPadding="false"
+        android:padding="10dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_main_show_image_picker"

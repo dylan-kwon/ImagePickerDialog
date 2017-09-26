@@ -60,10 +60,12 @@ public class ImagePickerAdapter extends MultiChoiceAdapter<Uri> {
         }
     }
 
-    public void checkedChangedItem(Uri item) {
-        getCheckedItems().clear();
-        getCheckedItems().add(item);
-        notifyDataSetChanged();
+    public void checkedChangedItem(int position) {
+        if (getCheckedItemCount() > 0) {
+            Uri beforeCheckedItem = getCheckedItem(0);
+            setChecked(beforeCheckedItem, false);
+        }
+        setChecked(position, true);
     }
 
     /**

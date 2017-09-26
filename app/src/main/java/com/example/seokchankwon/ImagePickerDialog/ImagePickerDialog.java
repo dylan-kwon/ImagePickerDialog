@@ -173,7 +173,8 @@ public class ImagePickerDialog extends BottomSheetDialogFragment {
     private void selectImage(int position, Uri item) {
         if (mLimitCount <= 1) {
             // 한장만 선택 가능한 경우
-            mAdapter.checkedChangedItem(item);
+            mAdapter.checkedChangedItem(position);
+            updateViews();
 
         } else {
 
@@ -199,14 +200,13 @@ public class ImagePickerDialog extends BottomSheetDialogFragment {
 
     private void updateViews() {
         int checkedItemCount = mAdapter.getCheckedItemCount();
+        tvImageCount.setText(String.valueOf(checkedItemCount));
 
         if (checkedItemCount <= 0) {
             tvImageCount.setVisibility(View.INVISIBLE);
         } else {
             tvImageCount.setVisibility(View.VISIBLE);
         }
-
-        tvImageCount.setText(String.valueOf(checkedItemCount));
     }
 
     public void setOnImageSelectedListener(OnImageSelectedListener listener) {

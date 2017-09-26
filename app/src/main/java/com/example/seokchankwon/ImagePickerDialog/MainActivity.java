@@ -11,10 +11,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.example.seokchankwon.ImagePickerDialog.adapter.SelectedImageAdapter;
 
 import java.util.ArrayList;
 
@@ -27,8 +30,10 @@ public class MainActivity extends AppCompatActivity {
     private Context mContext;
 
     private Toolbar mToolbar;
-    private TextView tvSelectedImagesPath;
+    private ViewPager mViewPager;
     private FloatingActionButton fabShowSelector;
+
+    private SelectedImageAdapter mAdapter;
 
 
     @Override
@@ -40,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
 
         mContext = this;
+
+        mAdapter = new SelectedImageAdapter(mContext, Glide.with(this));
+
+        mViewPager.setAdapter(mAdapter);
+        mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.dim_10dp));
+        mViewPager.setOffscreenPageLimit(2);
 
         fabShowSelector.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         mToolbar = (Toolbar) findViewById(R.id.tb_activity_main);
-        tvSelectedImagesPath = (TextView) findViewById(R.id.tv_activity_main_selected_images_path);
+        mViewPager = (ViewPager) findViewById(R.id.vp_activity_main_selected_images);
         fabShowSelector = (FloatingActionButton) findViewById(R.id.fab_main_show_image_picker);
     }
 
@@ -72,24 +83,11 @@ public class MainActivity extends AppCompatActivity {
         imagePickerDialog.setOnImageSelectedListener(new ImagePickerDialog.OnImageSelectedListener() {
             @Override
             public void onConfirm(@NonNull ArrayList<Uri> uris) {
-                editImagesPath(uris);
+                mAdapter.setItems(uris);
             }
         });
 
         imagePickerDialog.show(getSupportFragmentManager(), DIALOG_TAG_IMAGE_PICKER);
-    }
-
-    private void editImagesPath(@NonNull ArrayList<Uri> uris) {
-        StringBuilder stringBuilder = new StringBuilder();
-
-        for (Uri uri : uris) {
-            stringBuilder
-                    .append(uri.getPath())
-                    .append("\n")
-                    .append("\n");
-        }
-
-        tvSelectedImagesPath.setText(stringBuilder.toString());
     }
 
     private boolean requestPermission() {
