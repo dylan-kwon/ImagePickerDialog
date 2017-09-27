@@ -35,7 +35,7 @@ public class ImagePickerDialog extends BottomSheetDialogFragment {
 
     private Context mContext;
 
-    private TextView tvOk;
+    private TextView tvComplete;
     private TextView tvImageCount;
 
     private RecyclerView rvImagePicker;
@@ -91,10 +91,10 @@ public class ImagePickerDialog extends BottomSheetDialogFragment {
         rvImagePicker.setLayoutManager(layoutManager);
         rvImagePicker.setAdapter(mAdapter);
 
-        tvOk.setOnClickListener(new View.OnClickListener() {
+        tvComplete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectConfirm();
+                selectComplete();
             }
         });
 
@@ -116,12 +116,12 @@ public class ImagePickerDialog extends BottomSheetDialogFragment {
     }
 
     private void initView(View view) {
-        tvOk = view.findViewById(R.id.tv_dialog_image_picker_confirm);
+        tvComplete = view.findViewById(R.id.tv_dialog_image_picker_complete);
         tvImageCount = view.findViewById(R.id.tv_dialog_image_picker_count);
         rvImagePicker = view.findViewById(R.id.rv_dialog_image_picker);
     }
 
-    private void selectConfirm() {
+    private void selectComplete() {
         if (mOnImageSelectedListener != null) {
             if (mAdapter.getCheckedItemCount() > 0) {
                 mOnImageSelectedListener.onConfirm(mAdapter.getCheckedItems());

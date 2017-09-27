@@ -8,5 +8,11 @@
 
     <string name="max">최대</string>
     <string name="image_select_over_count">개의 이미지까지 선택 가능합니다!</string>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 
 </resources>

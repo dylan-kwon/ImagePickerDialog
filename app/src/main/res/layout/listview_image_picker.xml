@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:layout_margin="1.25dp"
-    android:background="@color/color_efeff4"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground">
 
@@ -15,7 +14,7 @@
         android:layout_height="match_parent"
         android:background="@color/color_d8d8d8"
         android:scaleType="centerInside"
-        app:srcCompat="@drawable/ic_image_white_48dp" />
+        app:srcCompat="@drawable/ic_image_white_48dp_vector" />
 
     <ImageView
         android:layout_width="22dp"
@@ -24,7 +23,7 @@
         android:layout_marginEnd="6.5dp"
         android:layout_marginRight="6.5dp"
         android:layout_marginTop="6.5dp"
-        android:background="@drawable/selector_check_multi_photo" />
+        android:background="@drawable/selector_radio_image_picker" />
 
     <TextView
         android:id="@+id/tv_listview_image_picker_index"
@@ -34,7 +33,7 @@
         android:layout_marginEnd="6.5dp"
         android:layout_marginRight="6.5dp"
         android:layout_marginTop="6.5dp"
-        android:background="@drawable/shape_round_accent_22dp"
+        android:background="@drawable/shape_oval_accent_22dp"
         android:gravity="center"
         android:textColor="@color/color_ffffff"
         android:visibility="gone" />

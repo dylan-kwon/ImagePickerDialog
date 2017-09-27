@@ -33,6 +33,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="10dp"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_image_white_48dp" />
+        app:srcCompat="@drawable/ic_image_white_48dp_vector" />
 
 </android.support.design.widget.CoordinatorLayout>
