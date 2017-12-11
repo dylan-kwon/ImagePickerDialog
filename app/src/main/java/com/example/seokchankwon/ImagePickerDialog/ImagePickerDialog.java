@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * Created by seokchan.kwon on 2017. 9. 26..
  */
 
-public class ImagePickerDialog extends BottomSheetDialogFragment {
+public class ImagePickerDialog extends BaseBottomSheetDialogFragment {
 
     public static final String EXTRA_LIMIT_COUNT = "extra.limit_count";
 
@@ -49,10 +49,10 @@ public class ImagePickerDialog extends BottomSheetDialogFragment {
         // newInstance를 사용할 것
     }
 
-    public static ImagePickerDialog newInstance(int limitCount) {
+    private static ImagePickerDialog newInstance(Builder builder) {
         ImagePickerDialog dialog = new ImagePickerDialog();
         Bundle bundle = new Bundle();
-        bundle.putInt(EXTRA_LIMIT_COUNT, limitCount);
+        bundle.putInt(EXTRA_LIMIT_COUNT, builder.mLimitCount);
         dialog.setArguments(bundle);
         return dialog;
     }
@@ -66,7 +66,7 @@ public class ImagePickerDialog extends BottomSheetDialogFragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.dialog_image_picker, container, false);
     }
 
@@ -79,26 +79,17 @@ public class ImagePickerDialog extends BottomSheetDialogFragment {
                 new GridLayoutManager(mContext, 3, LinearLayoutManager.VERTICAL, false);
 
         mAdapter = new ImagePickerAdapter(mContext, Glide.with(this));
-        mAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<Uri>() {
-            @Override
-            public void onItemClick(int position, Uri item) {
-                selectImage(position, item);
-            }
-        });
+        mAdapter.setOnItemClickListener(this::selectImage);
 
         rvImagePicker.setHasFixedSize(true);
         rvImagePicker.setItemAnimator(null);
         rvImagePicker.setLayoutManager(layoutManager);
         rvImagePicker.setAdapter(mAdapter);
 
-        tvComplete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectComplete();
-            }
-        });
+        mAdapter.setItems(loadImage());
 
-        loadImage();
+        tvComplete.setOnClickListener(v -> selectComplete());
+
     }
 
     @Override
@@ -110,7 +101,8 @@ public class ImagePickerDialog extends BottomSheetDialogFragment {
     private void setupInstanceState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             mLimitCount = savedInstanceState.getInt(EXTRA_LIMIT_COUNT, 0);
-        } else {
+
+        } else if (getArguments() != null) {
             mLimitCount = getArguments().getInt(EXTRA_LIMIT_COUNT, 0);
         }
     }
@@ -130,7 +122,7 @@ public class ImagePickerDialog extends BottomSheetDialogFragment {
         dismiss();
     }
 
-    private void loadImage() {
+    private ArrayList<Uri> loadImage() {
         ArrayList<Uri> uriList = new ArrayList<>();
         Cursor imageCursor = null;
 
@@ -142,7 +134,8 @@ public class ImagePickerDialog extends BottomSheetDialogFragment {
                     MediaStore.Images.Media.EXTERNAL_CONTENT_URI, e, null, null, orderBy);
 
             if (imageCursor == null) {
-                return;
+                // 비어있는 arrayList
+                return uriList;
             }
 
             while (imageCursor.moveToNext()) {
@@ -167,7 +160,7 @@ public class ImagePickerDialog extends BottomSheetDialogFragment {
             }
         }
 
-        mAdapter.setItems(uriList);
+        return uriList;
     }
 
     private void selectImage(int position, Uri item) {
@@ -216,4 +209,38 @@ public class ImagePickerDialog extends BottomSheetDialogFragment {
     public interface OnImageSelectedListener {
         void onConfirm(@NonNull ArrayList<Uri> uris);
     }
+
+    public static class Builder extends BaseBottomSheetDialogFragment.Builder<Builder, ImagePickerDialog> {
+
+        private int mLimitCount;
+
+        private OnImageSelectedListener mOnImageSelectedListener;
+
+
+        public Builder() {
+            mLimitCount = 1;
+            mOnImageSelectedListener = null;
+        }
+
+        public Builder setLimitCount(int limitCount) {
+            mLimitCount = limitCount;
+            return this;
+        }
+
+        public Builder setOnImageSelectedListener(OnImageSelectedListener listener) {
+            mOnImageSelectedListener = listener;
+            return this;
+        }
+
+        @NonNull
+        @Override
+        public ImagePickerDialog build() {
+            ImagePickerDialog dialog = newInstance(this);
+            dialog.setOnImageSelectedListener(mOnImageSelectedListener);
+            setBottomSheetState(dialog);
+            return dialog;
+        }
+
+    }
+
 }

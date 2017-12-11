@@ -3,7 +3,6 @@ package com.example.seokchankwon.ImagePickerDialog;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,9 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
-import com.example.seokchankwon.ImagePickerDialog.adapter.SelectedImageAdapter;
-
-import java.util.ArrayList;
+import com.example.seokchankwon.ImagePickerDialog.adapter.ImagePagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private FloatingActionButton fabShowSelector;
 
-    private SelectedImageAdapter mAdapter;
+    private ImagePagerAdapter mAdapter;
 
 
     @Override
@@ -46,26 +43,21 @@ public class MainActivity extends AppCompatActivity {
 
         mContext = this;
 
-        mAdapter = new SelectedImageAdapter(mContext, Glide.with(this));
+        mAdapter = new ImagePagerAdapter(mContext, Glide.with(this));
 
         mViewPager.setAdapter(mAdapter);
         mViewPager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.dim_10dp));
         mViewPager.setOffscreenPageLimit(2);
 
-        fabShowSelector.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showImagePicker();
-            }
-        });
+        fabShowSelector.setOnClickListener(v -> showImagePicker());
 
         requestPermission();
     }
 
     private void initView() {
-        mToolbar = (Toolbar) findViewById(R.id.tb_activity_main);
-        mViewPager = (ViewPager) findViewById(R.id.vp_activity_main_selected_images);
-        fabShowSelector = (FloatingActionButton) findViewById(R.id.fab_main_show_image_picker);
+        mToolbar = findViewById(R.id.tb_activity_main);
+        mViewPager = findViewById(R.id.vp_activity_main_selected_images);
+        fabShowSelector = findViewById(R.id.fab_main_show_image_picker);
     }
 
     private void showImagePicker() {
@@ -79,13 +71,10 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        ImagePickerDialog imagePickerDialog = ImagePickerDialog.newInstance(10);
-        imagePickerDialog.setOnImageSelectedListener(new ImagePickerDialog.OnImageSelectedListener() {
-            @Override
-            public void onConfirm(@NonNull ArrayList<Uri> uris) {
-                mAdapter.setItems(uris);
-            }
-        });
+        ImagePickerDialog imagePickerDialog = new ImagePickerDialog.Builder()
+                .setLimitCount(10)
+                .setOnImageSelectedListener(uris -> mAdapter.setItems(uris))
+                .build();
 
         imagePickerDialog.show(getSupportFragmentManager(), DIALOG_TAG_IMAGE_PICKER);
     }

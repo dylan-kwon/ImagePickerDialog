@@ -110,4 +110,5 @@ public class ImagePickerAdapter extends MultiChoiceAdapter<Uri> {
             return tvIndex;
         }
     }
+
 }

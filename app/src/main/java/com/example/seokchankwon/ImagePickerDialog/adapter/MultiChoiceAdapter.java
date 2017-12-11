@@ -31,7 +31,6 @@ public abstract class MultiChoiceAdapter<T> extends BaseRecyclerViewAdapter<T> {
 
     @Override
     public void setItem(@Nullable T item) {
-
         ArrayList<T> tempCheckedList = new ArrayList<>();
         tempCheckedList.addAll(mCheckedList);
 
@@ -42,13 +41,11 @@ public abstract class MultiChoiceAdapter<T> extends BaseRecyclerViewAdapter<T> {
                 mCheckedList.add(item);
             }
         }
-
         super.setItem(item);
     }
 
     @Override
     public void setItems(@Nullable ArrayList<T> items) {
-
         ArrayList<T> tempCheckedList = new ArrayList<>();
         tempCheckedList.addAll(mCheckedList);
 
@@ -81,6 +78,7 @@ public abstract class MultiChoiceAdapter<T> extends BaseRecyclerViewAdapter<T> {
     @Override
     public void removeItem(int position) {
         T item = getItem(position);
+
         if (mCheckedList.contains(item)) {
             mCheckedList.remove(item);
         }
@@ -134,7 +132,6 @@ public abstract class MultiChoiceAdapter<T> extends BaseRecyclerViewAdapter<T> {
     }
 
     public void checkedChange(@NonNull T item) {
-
         if (mCheckedList.contains(item)) {
             mCheckedList.remove(item);
         } else {
@@ -160,35 +157,36 @@ public abstract class MultiChoiceAdapter<T> extends BaseRecyclerViewAdapter<T> {
         } else {
             removeCheckedItem(item);
         }
-
         int position = getItemIndex(item);
         notifyItemChanged(position);
     }
 
     public void setChecked(@Nullable int[] positions, boolean isChecked) {
-        if (positions != null) {
-            for (int position : positions) {
-                if (isChecked) {
-                    insertCheckedItem(position);
-                } else {
-                    removeCheckedItem(position);
-                }
-                notifyItemChanged(position);
+        if (positions == null) {
+            return;
+        }
+        for (int position : positions) {
+            if (isChecked) {
+                insertCheckedItem(position);
+            } else {
+                removeCheckedItem(position);
             }
+            notifyItemChanged(position);
         }
     }
 
     public void setChecked(@Nullable ArrayList<T> list, boolean isChecked) {
-        if (list != null) {
-            for (T item : list) {
-                if (isChecked) {
-                    insertCheckedItem(item);
-                } else {
-                    removeCheckedItem(item);
-                }
-                int position = getItemIndex(item);
-                notifyItemChanged(position);
+        if (list == null) {
+            return;
+        }
+        for (T item : list) {
+            if (isChecked) {
+                insertCheckedItem(item);
+            } else {
+                removeCheckedItem(item);
             }
+            int position = getItemIndex(item);
+            notifyItemChanged(position);
         }
     }
 
@@ -220,4 +218,5 @@ public abstract class MultiChoiceAdapter<T> extends BaseRecyclerViewAdapter<T> {
     public int getCheckedItemCount() {
         return mCheckedList.size();
     }
+
 }

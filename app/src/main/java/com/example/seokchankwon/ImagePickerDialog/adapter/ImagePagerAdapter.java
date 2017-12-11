@@ -2,6 +2,7 @@ package com.example.seokchankwon.ImagePickerDialog.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,17 +15,17 @@ import com.example.seokchankwon.ImagePickerDialog.R;
  * Created by seokchan.kwon on 2017. 9. 26..
  */
 
-public class SelectedImageAdapter extends BasePagerAdapter<Uri> {
+public class ImagePagerAdapter extends BasePagerAdapter<Uri> {
 
     private RequestManager mRequestManager;
 
-    public SelectedImageAdapter(Context context, RequestManager requestManager) {
+    public ImagePagerAdapter(Context context, RequestManager requestManager) {
         super(context);
         this.mRequestManager = requestManager;
     }
 
     @Override
-    public int getItemPosition(Object object) {
+    public int getItemPosition(@NonNull Object object) {
         return POSITION_NONE;
     }
 
@@ -33,8 +34,9 @@ public class SelectedImageAdapter extends BasePagerAdapter<Uri> {
         return 0.25f;
     }
 
+    @NonNull
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(@NonNull ViewGroup container, int position) {
         View view = getInflater().inflate(R.layout.viewpager_selected_image, container, false);
         Holder holder = new Holder(view);
 

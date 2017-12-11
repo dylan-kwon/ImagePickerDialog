@@ -55,12 +55,12 @@ public abstract class BasePagerAdapter<T> extends PagerAdapter {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((View) object);
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object) {
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
     }
 
@@ -90,4 +90,5 @@ public abstract class BasePagerAdapter<T> extends PagerAdapter {
         mList.clear();
         notifyDataSetChanged();
     }
+
 }

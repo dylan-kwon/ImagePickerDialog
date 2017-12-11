@@ -33,10 +33,10 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
     }
 
     private void init(Context context, ArrayList<T> list) {
-        mList = list;
-        if (mList == null) {
-            mList = new ArrayList<>();
+        if (list == null) {
+            list = new ArrayList<>();
         }
+        mList = list;
         mContext = context;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -64,68 +64,84 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
     public void setItem(@Nullable T item) {
         mList.clear();
 
-        if (item != null) {
-            mList.add(item);
+        if (item == null) {
+            return;
         }
 
+        mList.add(item);
         notifyDataSetChanged();
     }
 
     public void setItems(@Nullable ArrayList<T> items) {
         mList.clear();
 
-        if (items != null) {
-            mList.addAll(items);
+        if (items == null) {
+            return;
         }
 
+        mList.addAll(items);
         notifyDataSetChanged();
     }
 
     public void insertItem(@Nullable T item) {
         int position = mList.size();
 
-        if (item != null) {
-            mList.add(item);
-            notifyItemInserted(position);
+        if (item == null) {
+            return;
         }
+
+        mList.add(item);
+        notifyItemInserted(position);
     }
 
     public void insertItem(int position, @Nullable T item) {
-        if (item != null) {
-            mList.add(position, item);
-            notifyItemInserted(position);
+        if (item == null) {
+            return;
         }
+        mList.add(position, item);
+        notifyItemInserted(position);
     }
 
     public void insertItems(@Nullable ArrayList<T> items) {
         int startPosition = mList.size();
 
-        if (items != null) {
-            int itemCount = items.size();
-            mList.addAll(items);
-
-            notifyItemRangeInserted(startPosition, itemCount);
+        if (items == null) {
+            return;
         }
+
+        int itemCount = items.size();
+        mList.addAll(items);
+
+        notifyItemRangeInserted(startPosition, itemCount);
     }
 
     public void insertItems(int position, @Nullable ArrayList<T> items) {
-        if (items != null) {
-            int itemCount = items.size();
-            mList.addAll(position, items);
-
-            notifyItemRangeInserted(position, itemCount);
+        if (items == null) {
+            return;
         }
+
+        int itemCount = items.size();
+        mList.addAll(position, items);
+
+        notifyItemRangeInserted(position, itemCount);
     }
 
     public void removeItem(@NonNull T item) {
         int position = mList.indexOf(item);
-        mList.remove(item);
+        mList.remove(position);
         notifyItemRemoved(position);
     }
 
     public void removeItem(int position) {
         mList.remove(position);
         notifyItemRemoved(position);
+    }
+
+    public void moveItem(int fromPosition, int toPosition) {
+        T fromItem = mList.get(fromPosition);
+        mList.remove(fromPosition);
+        mList.add(toPosition, fromItem);
+        notifyItemMoved(fromPosition, toPosition);
     }
 
     public void clear() {
@@ -153,11 +169,11 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
     }
 
     public interface OnItemClickListener<T> {
-        void onItemClick(int position, T item);
+        void onItemClick(int adapterPosition, T item);
     }
 
     public interface OnItemLongClickListener<T> {
-        void onItemLongClick(int position, T item);
+        void onItemLongClick(int adapterPosition, T item);
     }
 
     public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder
@@ -187,18 +203,18 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
         @Override
         public boolean onLongClick(View view) {
             if (mOnItemLongClickListener == null) {
-                return false;
+                return true;
             }
 
             int adapterPosition = getAdapterPosition();
             if (adapterPosition == RecyclerView.NO_POSITION) {
-                return false;
+                return true;
             }
 
             T item = getItem(adapterPosition);
             mOnItemLongClickListener.onItemLongClick(adapterPosition, item);
 
-            return false;
+            return true;
         }
     }
 
