@@ -1,5 +1,7 @@
 What is ImagePickerDialog?
 ==========================
+ImagePickerDialog is implemented by inheriting from BottomSheetDialogFragment.
+<br/>This example loads an image stored on the device, selects it, and returns an ArrayList <Uri>.
 
 Preview
 -------
