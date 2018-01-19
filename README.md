@@ -56,5 +56,5 @@ T-Academy [스위프트 강좌](https://tacademy.sktechx.com/live/player/onlineL
 Index
 -----
 
-1.	[상수, 변수 선언 방법, 데이터 타입 종류, 연산자](./app/gradle.xml/)
+1.	[상수, 변수 선언 방법, 데이터 타입 종류, 연산자](./app/build.gradle/)
 2.	문자 및 문자열 데이터
