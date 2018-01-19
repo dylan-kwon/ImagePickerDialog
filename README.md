@@ -1,7 +1,7 @@
 What is ImagePickerDialog?
 ==========================
-ImagePickerDialog is implemented by inheriting from BottomSheetDialogFragment.
-<br/>This example loads an image stored on the device, selects it, and returns an ArrayList <Uri>.
+
+ImagePickerDialog is implemented by inheriting from BottomSheetDialogFragment.<br/>This example loads an image stored on the device, selects it, and returns an ArrayList <Uri>.
 
 Preview
 -------
@@ -48,3 +48,13 @@ private void showImagePicker() {
 -	`ImagePickerDialog.Builder().setBottomSheetCallback(BottomSheetCallback callback)`
 -	`ImagePickerDialog.Builder().setOnDismissListener(OnDismissListener listener)`
 -	`ImagePickerDialog.Builder().setOnImageSelectedListener(OnImageSelectListener listener)`
+
+Study Swift
+===========
+T-Academy [스위프트 강좌](https://tacademy.sktechx.com/live/player/onlineLectureDetail.action?seq=101)를 보면서 만든 프로젝트입니다.
+
+Index
+-----
+
+1.	[상수, 변수 선언 방법, 데이터 타입 종류, 연산자](./app/gradle.xml/)
+2.	문자 및 문자열 데이터
